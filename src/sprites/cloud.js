@@ -1,19 +1,18 @@
 import Phaser from 'phaser';
 
-const CLOUD_SPEED = 100;
-const CLOUD_GRAVITY = 0;
-
 export class Cloud extends Phaser.Sprite {
-  constructor(game, x, y) {
+  constructor(game, x, y, startY, velocity, changeOnTickValue) {
     super(game, x, y, 'cloudsprite');
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.immovable = true;
 
+    this.startY = startY;
+    this.changeOnTickValue = changeOnTickValue;
+
     this.animations.add('dry', [0]);
     this.animations.add('rain', [1]);
 
-    this.body.gravity.y = CLOUD_GRAVITY;
-    this.body.velocity.x = -CLOUD_SPEED;
+    this.body.velocity.x = -velocity;
     this.count = 0;
     this.animations.play('dry', 10, true);
 
@@ -62,9 +61,8 @@ export class Cloud extends Phaser.Sprite {
 
   update() {
     this.count++;
-    if (this.count % 60 === 0) {
+    if (this.count % this.changeOnTickValue === 0) {
       this.changeState();
     };
-
   }
 }
