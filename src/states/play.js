@@ -40,14 +40,16 @@ export class Play extends Phaser.State {
     }
 
     update() {
+        // update the counter and angle of clouds
         this.count++;
-        if (this.count % 120 === 0) {
+        this.angle += .1;
 
+        // add a cloud with startY, velocityX, changeOnTickValue
+        if (this.count % 120 === 0) {
           const startY = Math.floor((Math.random() * (CLOUD_MAX_HEIGHT - CLOUD_MIN_HEIGHT)) + CLOUD_MIN_HEIGHT);
           const velocityX = Math.floor((Math.random() * (CLOUD_MAX_SPEED - CLOUD_MIN_SPEED)) + CLOUD_MIN_SPEED);
           const changeOnTickValue = Math.floor((Math.random() * (CLOUD_CHANGESTATE_MAX - CLOUD_CHANGESTATE_MIN)) + CLOUD_CHANGESTATE_MIN);
 
-          // add 1 cloud
           this.clouds.push(new Cloud(this.game, 600, 50, startY, velocityX, changeOnTickValue));
           this.game.add.existing(this.clouds[this.clouds.length - 1]);
         };
@@ -55,9 +57,9 @@ export class Play extends Phaser.State {
         // collision of player with invisible floor
         this.game.physics.arcade.collide(this.player, this.floor);
 
-
-        this.clouds.forEach((cloud) => {
-          // collision of player with cloud, only return true when it's raining
+        // for each cloud currently on the screen
+        this.clouds.forEach((cloud, index) => {
+          // check collision of player with cloud, only return true when it's raining
           this.game.physics.arcade.collide(this.player, cloud.emitter,
             () => {
               this.game.state.start('gameover');
@@ -66,10 +68,14 @@ export class Play extends Phaser.State {
 
           // change the angle of the cloud
           cloud.y = cloud.startY + Math.sin(this.angle) * 50;
+
+          // remove clouds if they're outside of the screen
+          if (cloud.x < 0) {
+            this.clouds[index].destroy();
+            this.clouds = this.clouds.filter(item => item !== cloud);
+          }
+
         });
-
-        this.angle += .1;
-
 
         // move the player
         this.player.move(this.cursors);
