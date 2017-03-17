@@ -5,13 +5,16 @@ import { Player } from '../sprites/player';
 import { Cloud } from '../sprites/cloud';
 import { Floor } from '../sprites/floor';
 
-const SPAWNRATE = 120;
 const CLOUD_MIN_HEIGHT = 200;
 const CLOUD_MAX_HEIGHT = 400;
 const CLOUD_MIN_SPEED = 50;
 const CLOUD_MAX_SPEED = 150;
 const CLOUD_CHANGESTATE_MIN = 30;
 const CLOUD_CHANGESTATE_MAX = 90;
+const DIFFICULTY_RANGE = 0.25;
+const DIFFICULTY_TICK = 250;
+let DIFFICULTY = 0;
+let SPAWNRATE = 120;
 
 export class Play extends Phaser.State {
     create() {
@@ -37,6 +40,10 @@ export class Play extends Phaser.State {
 
         // angle of the clouds
         this.angle = 0;
+        
+        //GAME BALANCE
+        DIFFICULTY = 0;
+        SPAWNRATE = 120;
     }
 
     update() {
@@ -44,10 +51,13 @@ export class Play extends Phaser.State {
         this.count++;
         this.angle += .1;
 
+        console.log('CONSTANS ', SPAWNRATE)
+        if (SPAWNRATE <= 25) SPAWNRATE = 25;
+
         // add a cloud with startY, velocityX, changeOnTickValue
-        if (this.count % 120 === 0) {
+        if (this.count % SPAWNRATE === 0) {
           const startY = Math.floor((Math.random() * (CLOUD_MAX_HEIGHT - CLOUD_MIN_HEIGHT)) + CLOUD_MIN_HEIGHT);
-          const velocityX = Math.floor((Math.random() * (CLOUD_MAX_SPEED - CLOUD_MIN_SPEED)) + CLOUD_MIN_SPEED);
+          const velocityX = Math.floor((Math.random() * (CLOUD_MAX_SPEED - CLOUD_MIN_SPEED)) + CLOUD_MIN_SPEED) + DIFFICULTY;
           const changeOnTickValue = Math.floor((Math.random() * (CLOUD_CHANGESTATE_MAX - CLOUD_CHANGESTATE_MIN)) + CLOUD_CHANGESTATE_MIN);
 
           this.clouds.push(new Cloud(this.game, 600, 50, startY, velocityX, changeOnTickValue));
@@ -82,6 +92,10 @@ export class Play extends Phaser.State {
 
         //  Scroll the background
         this.background.tilePosition.x -= 20;
-
+        
+        if (this.count % DIFFICULTY_TICK === 0) {
+          DIFFICULTY = Math.floor((this.count / DIFFICULTY_TICK)) * DIFFICULTY_RANGE;
+          SPAWNRATE = SPAWNRATE - Math.ceil(DIFFICULTY);
+        }
     }
 }
