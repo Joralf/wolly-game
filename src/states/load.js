@@ -12,6 +12,9 @@ export class Load extends Phaser.State {
        this.game.load.image('background', '../assets/bg.png');
        this.game.load.spritesheet('rain', '../assets/drip_4_2x.png', 17, 17);
        this.game.load.spritesheet('cloudsprite', '../assets/cloudspriteparticle.png', 80, 600, 2);
+
+       this.game.load.audio('menu', '../assets/menu.mp3');
+
     }
 
     create() {
