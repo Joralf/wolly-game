@@ -27,8 +27,9 @@ export class GameOver extends Phaser.State{
         let title = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 75, 'GAME OVER', textStyleTitle);
         title.anchor.set(0.5);
 
+        console.log(this.game.state.states['gameover'].score);
 
-        let instructions = this.game.add.text(this.game.world.centerX, this.game.world.centerY, '- spacebar to restart -', textStyle);
+        let instructions = this.game.add.text(this.game.world.centerX, this.game.world.centerY, this.game.state.states['gameover'].score + ' - spacebar to restart -', textStyle);
         instructions.anchor.set(0.5);
 
         let spacebar = this.game.input.keyboard.addKey([ Phaser.Keyboard.SPACEBAR ]);

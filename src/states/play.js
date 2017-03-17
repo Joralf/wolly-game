@@ -10,10 +10,10 @@ const CLOUD_MIN_HEIGHT = 100;
 const CLOUD_MAX_HEIGHT = 300;
 const CLOUD_MIN_SPEED = 50;
 const CLOUD_MAX_SPEED = 150;
-const CLOUD_CHANGESTATE_MIN = 30;
-const CLOUD_CHANGESTATE_MAX = 90;
+const CLOUD_CHANGESTATE_MIN = 60;
+const CLOUD_CHANGESTATE_MAX = 120;
 const DIFFICULTY_RANGE = 0.25;
-const DIFFICULTY_TICK = 500;
+const DIFFICULTY_TICK = 250;
 let DIFFICULTY;
 let SPAWNRATE;
 
@@ -44,8 +44,8 @@ export class Play extends Phaser.State {
         this.angle = 0;
 
         //GAME BALANCE
-        DIFFICULTY = 0;
-        SPAWNRATE = 40;
+        DIFFICULTY = 20;
+        SPAWNRATE = 180;
 
         // score text
         this.scoreText = this.game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
@@ -63,7 +63,7 @@ export class Play extends Phaser.State {
         this.angle += .1;
 
         // add a cloud with startY, velocityX, changeOnTickValue
-        if (this.count % 120 === 0) {
+        if (this.count % SPAWNRATE === 0) {
           const startY = Math.floor((Math.random() * (CLOUD_MAX_HEIGHT - CLOUD_MIN_HEIGHT)) + CLOUD_MIN_HEIGHT);
           const velocityX = Math.floor((Math.random() * (CLOUD_MAX_SPEED - CLOUD_MIN_SPEED)) + CLOUD_MIN_SPEED);
           const changeOnTickValue = Math.floor((Math.random() * (CLOUD_CHANGESTATE_MAX - CLOUD_CHANGESTATE_MIN)) + CLOUD_CHANGESTATE_MIN);
@@ -74,7 +74,7 @@ export class Play extends Phaser.State {
 
         //adding fences
         if (this.count % 420 === 0) {
-          this.fences.push(new Fence(this.game, 0, 470));
+          this.fences.push(new Fence(this.game, 0, 480));
           this.game.add.existing(this.fences[this.fences.length - 1]);
         };
 
@@ -86,6 +86,7 @@ export class Play extends Phaser.State {
           // check collision of player with cloud, only return true when it's raining
           this.game.physics.arcade.collide(this.player, cloud.emitter,
             () => {
+              this.game.state.states['gameover'].score = this.scoreText.text;
               this.game.state.start('gameover');
             }
           );

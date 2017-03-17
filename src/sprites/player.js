@@ -18,10 +18,14 @@ export class Player extends Phaser.Sprite {
         this.animations.play('walk', 4, true);
 
         this.anchor.setTo(.5, .5);
+        this.jumping = false;
     }
 
     jump() {
-      this.body.velocity.y = -250;
+      if (!this.jumping) {
+        this.body.velocity.y = -250;
+        this.jumping = true;
+      }
     }
 
     move(cursors) {
@@ -34,5 +38,11 @@ export class Player extends Phaser.Sprite {
         } else {
           this.body.velocity.x = 0;
         }
+    }
+
+    update() {
+      if (this.jumping === true && this.y === 488) {
+        this.jumping = false;
+      }
     }
 }
