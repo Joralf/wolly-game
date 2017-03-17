@@ -9,6 +9,7 @@ export class Player extends Phaser.Sprite {
         super(game, x, y, 'player');
 
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
+        
         this.body.collideWorldBounds = true;
         this.body.gravity.y = PLAYER_GRAVITY;
     }
