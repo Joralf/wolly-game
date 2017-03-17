@@ -12,9 +12,14 @@ export class Play extends Phaser.State {
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.game.input.keyboard.addKeyCapture([ Phaser.KeyCode.SPACEBAR ]);
+
+        //  The scrolling starfield background
+        this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background');
     }
 
     update() {
         this.player.move(this.cursors);
+         //  Scroll the background
+        this.background.tilePosition.x -= 10;
     }
 }
