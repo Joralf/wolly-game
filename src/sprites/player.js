@@ -1,6 +1,8 @@
 // src/sprites/wizard.js
-
 import Phaser from 'phaser';
+
+const PLAYER_SPEED = 500;
+const PLAYER_GRAVITY = 500;
 
 export class Player extends Phaser.Sprite {
     constructor(game, x, y) {
@@ -8,24 +10,16 @@ export class Player extends Phaser.Sprite {
 
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
         this.body.collideWorldBounds = true;
-        this.body.gravity.y = 500;
-
+        this.body.gravity.y = PLAYER_GRAVITY;
     }
 
     move(cursors) {
-        if (cursors.up.isDown) {
-            this.body.acceleration.y = -900;
-        } else if (cursors.down.isDown) {
-            this.body.acceleration.y = 300;
-        } else {
-            this.body.acceleration.y = 0;
-        }
         if (cursors.left.isDown) {
-            this.body.acceleration.x = -300;
+          this.body.velocity.x = -PLAYER_SPEED;
         } else if (cursors.right.isDown) {
-            this.body.acceleration.x = 300;
+          this.body.velocity.x = PLAYER_SPEED;
         } else {
-            this.body.acceleration.x = 0;
+          this.body.velocity.x = 0;
         }
     }
 }
