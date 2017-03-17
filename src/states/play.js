@@ -24,11 +24,11 @@ export class Play extends Phaser.State {
         this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background');
 
         // add invisible floor so player walks a bit above the edge of the window
-        this.floor = new Floor(this.game, 0, 550);
+        this.floor = new Floor(this.game, 0, 520);
         this.game.add.existing(this.floor);
 
         // add player
-        this.player = new Player(this.game, 20, 450);
+        this.player = new Player(this.game, 20, 480);
         this.game.add.existing(this.player);
 
         this.clouds = [];
@@ -97,7 +97,7 @@ export class Play extends Phaser.State {
         this.player.move(this.cursors);
 
         //  Scroll the background
-        this.background.tilePosition.x -= 20;
+        this.background.tilePosition.x -= 5;
 
         if (this.count % DIFFICULTY_TICK === 0) {
           DIFFICULTY = Math.floor((this.count / DIFFICULTY_TICK)) * DIFFICULTY_RANGE;

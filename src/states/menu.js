@@ -26,7 +26,6 @@ export class Menu extends Phaser.State {
             fill: 'white'
         };
 
-        //textStyle.setShadow(5, 5, 'rgba(0,0,0,0.5)', 5);
 
         let title = this.game.add.text(this.game.world.centerX, this.game.world.centerY - 75, 'WOLLY', textStyleTitle);
         title.anchor.set(0.5);
@@ -46,8 +45,4 @@ export class Menu extends Phaser.State {
         });
     }
 
-    update() {
-        //  Scroll the background
-        this.background.tilePosition.x -= 20;
-    }
 }
