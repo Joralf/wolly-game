@@ -3,6 +3,7 @@
 import Phaser from 'phaser';
 import { Player } from '../sprites/player';
 import { Cloud } from '../sprites/cloud';
+import { Floor } from '../sprites/floor';
 import { CloudRain } from '../sprites/cloud-rain';
 
 export class Play extends Phaser.State {
@@ -10,7 +11,7 @@ export class Play extends Phaser.State {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background');
 
-        this.player = new Player(this.game, 20, this.game.height);
+        this.player = new Player(this.game, 20, 500);
         //adding random clouds, feel free to refactor :)
         this.cloud = new Cloud(this.game, 600, 50);
         this.cloudRain = new CloudRain(this.game, 400, 200);
@@ -19,6 +20,9 @@ export class Play extends Phaser.State {
         this.game.add.existing(this.cloud);
         this.game.add.existing(this.cloudRain);
 
+        this.floor = new Floor(this.game, 0, 550);
+        this.game.add.existing(this.floor);
+
         this.cursors = this.game.input.keyboard.createCursorKeys();
         this.game.input.keyboard.addKeyCapture([ Phaser.KeyCode.SPACEBAR ]);
 
@@ -26,8 +30,11 @@ export class Play extends Phaser.State {
     }
 
     update() {
+        // collision of player with invisible floor
+        this.game.physics.arcade.collide(this.player, this.floor);
+
         this.player.move(this.cursors);
          //  Scroll the background
-        this.background.tilePosition.x -= 10;
+        this.background.tilePosition.x -= 20;
     }
 }
