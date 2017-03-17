@@ -26,6 +26,9 @@ export class Play extends Phaser.State {
 
         // assign cursor keys for controls
         this.cursors = this.game.input.keyboard.createCursorKeys();
+
+        // angle of the clouds
+        this.angle = 0;
     }
 
     update() {
@@ -50,5 +53,8 @@ export class Play extends Phaser.State {
 
         //  Scroll the background
         this.background.tilePosition.x -= 20;
+
+        this.cloud.y = 300 + Math.sin(this.angle) * 50;
+        this.angle += .1;
     }
 }
