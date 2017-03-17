@@ -10,6 +10,8 @@ export class Load extends Phaser.State {
        this.game.load.spritesheet('wizard', '../assets/wizardsprite.png', 95, 123, 6);
        this.game.load.spritesheet('player', '../assets/wol_logo.jpg', 51, 51);         
        this.game.load.image('background', '../assets/gamebg.jpg');
+       this.game.load.spritesheet('player', '../assets/player.jpg', 51, 51);
+       this.game.load.spritesheet('cloud', '../assets/cloud-1.png', 283, 142);         
     }
 
     create() {
