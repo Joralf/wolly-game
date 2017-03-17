@@ -12,6 +12,7 @@ export class Cloud extends Phaser.Sprite {
     this.animations.add('dry', [0]);
     this.animations.add('rain', [1]);
 
+    this.x = 800
     this.body.velocity.x = -velocity;
     this.count = 0;
     this.animations.play('dry', 10, true);
