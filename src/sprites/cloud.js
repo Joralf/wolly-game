@@ -16,7 +16,6 @@ export class Cloud extends Phaser.Sprite {
     this.body.velocity.x = -CLOUD_SPEED;
     this.count = 0;
     this.animations.play('dry', 10, true);
-
   }
 
   changeState() {

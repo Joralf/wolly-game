@@ -21,6 +21,7 @@ export class Play extends Phaser.State {
         this.game.add.existing(this.floor);
 
         this.cursors = this.game.input.keyboard.createCursorKeys();
+        this.angle = 0;
 
     }
 
@@ -43,5 +44,8 @@ export class Play extends Phaser.State {
         this.player.move(this.cursors);
          //  Scroll the background
         this.background.tilePosition.x -= 20;
+
+        this.cloud.y = 300 + Math.sin(this.angle) * 50;
+        this.angle += .1;
     }
 }
