@@ -12,6 +12,7 @@ export class Cloud extends Phaser.Sprite {
     this.animations.add('dry', [0]);
     this.animations.add('rain', [1]);
 
+    this.x = 800
     this.body.velocity.x = -velocity;
     this.count = 0;
     this.animations.play('dry', 10, true);
@@ -42,13 +43,11 @@ export class Cloud extends Phaser.Sprite {
     const animationType = this.animations.currentAnim.name;
     switch (animationType) {
       case "dry":
-        console.log("change state to rain");
         this.animations.play('rain', 10, true);
         this.isRaining = true;
         this.emitter.on = true;
         break;
       case "rain":
-        console.log("change state to dry");
         this.animations.play('dry', 10, true);
         this.isRaining = false;
         this.emitter.on = false;
