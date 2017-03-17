@@ -21,7 +21,7 @@ export class Player extends Phaser.Sprite {
     }
 
     jump() {
-      this.body.velocity.y = -280;
+      this.body.velocity.y = -250;
     }
 
     move(cursors) {
