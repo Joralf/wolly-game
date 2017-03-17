@@ -4,17 +4,15 @@ import Phaser from 'phaser';
 import { Player } from '../sprites/player';
 import { Cloud } from '../sprites/cloud';
 import { Floor } from '../sprites/floor';
+import { Fence } from '../sprites/fence';
 
+const SPAWNRATE = 120;
 const CLOUD_MIN_HEIGHT = 200;
 const CLOUD_MAX_HEIGHT = 400;
 const CLOUD_MIN_SPEED = 50;
 const CLOUD_MAX_SPEED = 150;
 const CLOUD_CHANGESTATE_MIN = 30;
 const CLOUD_CHANGESTATE_MAX = 90;
-const DIFFICULTY_RANGE = 0.25;
-const DIFFICULTY_TICK = 250;
-let DIFFICULTY = 0;
-let SPAWNRATE = 120;
 
 export class Play extends Phaser.State {
     create() {
@@ -34,16 +32,13 @@ export class Play extends Phaser.State {
         this.clouds = [];
         this.count = 0;
 
+        this.fences = [];
 
         // assign cursor keys for controls
         this.cursors = this.game.input.keyboard.createCursorKeys();
 
         // angle of the clouds
         this.angle = 0;
-        
-        //GAME BALANCE
-        DIFFICULTY = 0;
-        SPAWNRATE = 120;
     }
 
     update() {
@@ -51,17 +46,20 @@ export class Play extends Phaser.State {
         this.count++;
         this.angle += .1;
 
-        console.log('CONSTANS ', SPAWNRATE)
-        if (SPAWNRATE <= 25) SPAWNRATE = 25;
-
         // add a cloud with startY, velocityX, changeOnTickValue
-        if (this.count % SPAWNRATE === 0) {
+        if (this.count % 200 === 0) {
           const startY = Math.floor((Math.random() * (CLOUD_MAX_HEIGHT - CLOUD_MIN_HEIGHT)) + CLOUD_MIN_HEIGHT);
-          const velocityX = Math.floor((Math.random() * (CLOUD_MAX_SPEED - CLOUD_MIN_SPEED)) + CLOUD_MIN_SPEED) + DIFFICULTY;
+          const velocityX = Math.floor((Math.random() * (CLOUD_MAX_SPEED - CLOUD_MIN_SPEED)) + CLOUD_MIN_SPEED);
           const changeOnTickValue = Math.floor((Math.random() * (CLOUD_CHANGESTATE_MAX - CLOUD_CHANGESTATE_MIN)) + CLOUD_CHANGESTATE_MIN);
 
           this.clouds.push(new Cloud(this.game, 600, 50, startY, velocityX, changeOnTickValue));
           this.game.add.existing(this.clouds[this.clouds.length - 1]);
+        };
+
+        //adding fences
+        if (this.count % 420 === 0) {
+          this.fences.push(new Fence(this.game, 0, 480));
+          this.game.add.existing(this.fences[this.fences.length - 1]);
         };
 
         // collision of player with invisible floor
@@ -84,18 +82,29 @@ export class Play extends Phaser.State {
             this.clouds[index].destroy();
             this.clouds = this.clouds.filter(item => item !== cloud);
           }
-
         });
+
+        this.fences.forEach((fence, index) => {
+          this.game.physics.arcade.collide(this.player, fence,
+            () => {
+              this.game.state.start('gameover');
+            }
+          );
+
+          if (fence.x < 0) {
+            this.fences[index].destroy();
+            this.fences = this.fences.filter(item => item !== fence);
+          }
+        })
+
+        // change the angle of the cloud
+      //  this.fence.y = Math.sin(this.angle) * 50;
 
         // move the player
         this.player.move(this.cursors);
 
         //  Scroll the background
         this.background.tilePosition.x -= 20;
-        
-        if (this.count % DIFFICULTY_TICK === 0) {
-          DIFFICULTY = Math.floor((this.count / DIFFICULTY_TICK)) * DIFFICULTY_RANGE;
-          SPAWNRATE = SPAWNRATE - Math.ceil(DIFFICULTY);
-        }
+
     }
 }
