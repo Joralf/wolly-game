@@ -49,6 +49,7 @@ export class Play extends Phaser.State {
         //  Scroll the background
         this.background.tilePosition.x -= 20;
 
+        // move the cloud in a sinuswave
         this.cloud.y = 300 + Math.sin(this.angle) * 50;
         this.angle += .1;
     }
