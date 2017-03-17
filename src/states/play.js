@@ -33,6 +33,10 @@ export class Play extends Phaser.State {
         // collision of player with invisible floor
         this.game.physics.arcade.collide(this.player, this.floor);
 
+        this.game.physics.arcade.collide(this.player, this.cloudRain, () => {
+          this.game.state.start('gameover')
+        });
+
         this.player.move(this.cursors);
          //  Scroll the background
         this.background.tilePosition.x -= 20;
