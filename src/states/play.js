@@ -10,8 +10,8 @@ const CLOUD_MIN_HEIGHT = 100;
 const CLOUD_MAX_HEIGHT = 300;
 const CLOUD_MIN_SPEED = 50;
 const CLOUD_MAX_SPEED = 150;
-const CLOUD_CHANGESTATE_MIN = 60;
-const CLOUD_CHANGESTATE_MAX = 120;
+const CLOUD_CHANGESTATE_MIN = 70;
+const CLOUD_CHANGESTATE_MAX = 100;
 const DIFFICULTY_RANGE = 0.25;
 const DIFFICULTY_TICK = 250;
 let DIFFICULTY;
@@ -44,7 +44,7 @@ export class Play extends Phaser.State {
         this.angle = 0;
 
         //GAME BALANCE
-        DIFFICULTY = 20;
+        DIFFICULTY = 40;
         SPAWNRATE = 180;
 
         // score text
@@ -74,7 +74,7 @@ export class Play extends Phaser.State {
 
         //adding fences
         if (this.count % 420 === 0) {
-          this.fences.push(new Fence(this.game, 0, 480));
+          this.fences.push(new Fence(this.game, 0, 485));
           this.game.add.existing(this.fences[this.fences.length - 1]);
         };
 
@@ -104,6 +104,7 @@ export class Play extends Phaser.State {
         this.fences.forEach((fence, index) => {
           this.game.physics.arcade.collide(this.player, fence,
             () => {
+              this.game.state.states['gameover'].score = this.scoreText.text;
               this.game.state.start('gameover');
             }
           );
