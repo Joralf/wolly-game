@@ -6,13 +6,16 @@ import { Cloud } from '../sprites/cloud';
 import { Floor } from '../sprites/floor';
 import { Fence } from '../sprites/fence';
 
-const SPAWNRATE = 120;
 const CLOUD_MIN_HEIGHT = 200;
 const CLOUD_MAX_HEIGHT = 400;
 const CLOUD_MIN_SPEED = 50;
 const CLOUD_MAX_SPEED = 150;
 const CLOUD_CHANGESTATE_MIN = 30;
 const CLOUD_CHANGESTATE_MAX = 90;
+const DIFFICULTY_RANGE = 0.25;
+const DIFFICULTY_TICK = 250;
+let DIFFICULTY = 0;
+let SPAWNRATE = 120;
 
 export class Play extends Phaser.State {
     create() {
