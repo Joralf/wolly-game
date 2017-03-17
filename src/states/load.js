@@ -8,7 +8,7 @@ export class Load extends Phaser.State {
 
        this.game.add.text(80, 150, 'loading...', textStyle);
 
-       this.game.load.spritesheet('player', '../assets/player.jpg', 51, 51);
+       this.game.load.spritesheet('player', '../assets/wolly.png', 80, 64);
        this.game.load.image('background', '../assets/bg.png');
        this.game.load.spritesheet('rain', '../assets/drip_4_2x.png', 17, 17);
        this.game.load.spritesheet('cloudsprite', '../assets/cloudspriteparticle.png', 80, 600, 2);

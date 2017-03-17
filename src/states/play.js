@@ -17,7 +17,7 @@ export class Play extends Phaser.State {
         this.game.add.existing(this.floor);
 
         // add player
-        this.player = new Player(this.game, 20, 500);
+        this.player = new Player(this.game, 20, 450);
         this.game.add.existing(this.player);
 
         // add 1 cloud
