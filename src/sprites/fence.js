@@ -9,7 +9,7 @@ export class Fence extends Phaser.Sprite {
       this.x = 800;
       this.y = y;
 
-      this.body.velocity.x = -50;
+      this.body.velocity.x = -300;
 
     }
 

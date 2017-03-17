@@ -9,15 +9,19 @@ export class Player extends Phaser.Sprite {
         super(game, x, y, 'player');
 
         this.game.physics.enable(this, Phaser.Physics.ARCADE);
-        
+
         this.body.collideWorldBounds = true;
         this.body.gravity.y = PLAYER_GRAVITY;
 
         this.animations.add('walk');
         this.animations.add('stand', [0]);
         this.animations.play('walk', 4, true);
-        
+
         this.anchor.setTo(.5, .5);
+    }
+
+    jump() {
+      this.body.velocity.y = -280;
     }
 
     move(cursors) {

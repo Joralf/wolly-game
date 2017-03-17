@@ -6,16 +6,16 @@ import { Cloud } from '../sprites/cloud';
 import { Floor } from '../sprites/floor';
 import { Fence } from '../sprites/fence';
 
-const CLOUD_MIN_HEIGHT = 200;
-const CLOUD_MAX_HEIGHT = 400;
+const CLOUD_MIN_HEIGHT = 100;
+const CLOUD_MAX_HEIGHT = 300;
 const CLOUD_MIN_SPEED = 50;
 const CLOUD_MAX_SPEED = 150;
 const CLOUD_CHANGESTATE_MIN = 30;
 const CLOUD_CHANGESTATE_MAX = 90;
 const DIFFICULTY_RANGE = 0.25;
-const DIFFICULTY_TICK = 250;
-let DIFFICULTY = 0;
-let SPAWNRATE = 120;
+const DIFFICULTY_TICK = 500;
+let DIFFICULTY;
+let SPAWNRATE;
 
 export class Play extends Phaser.State {
     create() {
@@ -45,9 +45,14 @@ export class Play extends Phaser.State {
 
         //GAME BALANCE
         DIFFICULTY = 0;
-        SPAWNRATE = 120;
+        SPAWNRATE = 40;
 
+        // score text
         this.scoreText = this.game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
+
+        // assign spacebar to jump method of player
+        this.spacebar = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.spacebar.onDown.add(this.player.jump, this.player);
     }
 
     update() {
@@ -69,7 +74,7 @@ export class Play extends Phaser.State {
 
         //adding fences
         if (this.count % 420 === 0) {
-          this.fences.push(new Fence(this.game, 0, 480));
+          this.fences.push(new Fence(this.game, 0, 470));
           this.game.add.existing(this.fences[this.fences.length - 1]);
         };
 
