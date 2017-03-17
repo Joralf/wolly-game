@@ -40,15 +40,21 @@ export class Play extends Phaser.State {
 
         // angle of the clouds
         this.angle = 0;
-        
+
         //GAME BALANCE
         DIFFICULTY = 0;
         SPAWNRATE = 120;
+
+        this.scoreText = this.game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
+
+
     }
 
     update() {
-        // update the counter and angle of clouds
+        // update the counter, score and angle of clouds
         this.count++;
+        this.scoreText.text = 'Score: ' + Math.round(this.count / 10);
+
         this.angle += .1;
 
         console.log('CONSTANS ', SPAWNRATE)
@@ -92,7 +98,7 @@ export class Play extends Phaser.State {
 
         //  Scroll the background
         this.background.tilePosition.x -= 20;
-        
+
         if (this.count % DIFFICULTY_TICK === 0) {
           DIFFICULTY = Math.floor((this.count / DIFFICULTY_TICK)) * DIFFICULTY_RANGE;
           SPAWNRATE = SPAWNRATE - Math.ceil(DIFFICULTY);
