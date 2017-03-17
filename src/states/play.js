@@ -36,17 +36,12 @@ export class Play extends Phaser.State {
         this.game.physics.arcade.collide(this.player, this.floor);
 
         // collision of player with cloud, only return true when it's raining
-        this.game.physics.arcade.collide(this.player, this.cloud,
+        this.game.physics.arcade.collide(this.player, this.cloud.emitter,
           () => {
 
             this.game.state.start('gameover');
-          },
-          (player, cloud) => {
-            if (cloud.isRaining) {
-              return true;
-            }
-          return false;
-        });
+          }
+        );
 
         // move the player
         this.player.move(this.cursors);

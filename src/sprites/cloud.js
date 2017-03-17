@@ -21,7 +21,7 @@ export class Cloud extends Phaser.Sprite {
     this.emitter = this.game.add.emitter(40, 60, 400);
     this.emitter.width = this.width;
     //this.emitter.angle = 30; // uncomment to set an angle for the rain.
-    //
+
     this.emitter.makeParticles('rain');
 
     this.emitter.minParticleScale = 0.1;
