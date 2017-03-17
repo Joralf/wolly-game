@@ -4,7 +4,6 @@ import Phaser from 'phaser';
 
 //  The Google WebFont Loader will look for this object, so create it before loading the script.
 
-
 export class Menu extends Phaser.State {
 
     preload() {
@@ -16,7 +15,7 @@ export class Menu extends Phaser.State {
 
             //  The Google Fonts we want to load (specify as many as you like in the array)
             google: {
-                families: ['Francois One']
+                families: ['Revalia']
             }
 
         };
@@ -28,7 +27,7 @@ export class Menu extends Phaser.State {
         this.background = this.game.add.tileSprite(0, 0, 800, 600, 'background');
 
         let textStyle = {
-            font: 'Francois One', 
+            font: 'Revalia', 
             fontSize: '65px', 
             alight: 'center', 
             stroke: '#000000', 
@@ -48,9 +47,7 @@ export class Menu extends Phaser.State {
         let controlMessage = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 150, 'use arrow keys to move', textStyle);
 
         controlMessage.anchor.set(0.5);
-        
-        let muteMessage = this.game.add.text(this.game.world.centerX, this.game.world.centerY + 225, '"SPACEBAR" to win.', textStyle);
-        muteMessage.anchor.set(0.5);
+    
         
         let sKey = this.game.input.keyboard.addKey(Phaser.KeyCode.S);
         sKey.onDown.addOnce( () => this.game.state.start('play'));       
